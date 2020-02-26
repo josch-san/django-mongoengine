@@ -1,4 +1,3 @@
-from django.utils import six
 from django.core.exceptions import ImproperlyConfigured
 
 from django_mongoengine.utils.wrappers import WrapDocument, copy_class
@@ -44,27 +43,21 @@ class DocumentFormFixin(SingleObjectMixin):
 
 
 @copy_class(djmod.CreateView)
-class CreateView(six.with_metaclass(
-        WrapDocumentForm,
-        SingleObjectTemplateResponseMixin,
-        DocumentFormFixin,
-        djmod.BaseCreateView)):
+class CreateView(SingleObjectTemplateResponseMixin,
+        DocumentFormFixin, djmod.BaseCreateView,
+        metaclass=WrapDocument):
     __doc__  = djmod.CreateView.__doc__
 
 
 @copy_class(djmod.UpdateView)
-class UpdateView(six.with_metaclass(
-        WrapDocumentForm,
-        SingleObjectTemplateResponseMixin,
-        DocumentFormFixin,
-        djmod.BaseUpdateView)):
+class UpdateView(SingleObjectTemplateResponseMixin,
+        DocumentFormFixin,djmod.BaseUpdateView,
+        metaclass=WrapDocument):
     __doc__  = djmod.UpdateView.__doc__
 
 
 @copy_class(djmod.DeleteView)
-class DeleteView(six.with_metaclass(
-        WrapDocumentForm,
-        SingleObjectTemplateResponseMixin,
-        DocumentFormFixin,
-        djmod.BaseDeleteView)):
+class DeleteView(SingleObjectTemplateResponseMixin,
+        DocumentFormFixin,djmod.BaseDeleteView,
+        metaclass=WrapDocument):
     __doc__  = djmod.DeleteView.__doc__

@@ -1,5 +1,3 @@
-from django.utils import six
-
 from mongoengine.queryset import QuerySet
 
 from django_mongoengine.utils.wrappers import WrapDocument, copy_class
@@ -14,12 +12,12 @@ djmod = get_patched_django_module("django.views.generic.list",
     QuerySet=QuerySet,
 )
 
-@six.add_metaclass(WrapDocument)
-class MultipleObjectMixin(djmod.MultipleObjectMixin):
+class MultipleObjectMixin(
+        djmod.MultipleObjectMixin, metaclass=WrapDocument):
     pass
 
-@six.add_metaclass(WrapDocument)
-class MultipleObjectTemplateResponseMixin(djmod.MultipleObjectTemplateResponseMixin):
+class MultipleObjectTemplateResponseMixin(
+        djmod.MultipleObjectTemplateResponseMixin, metaclass=WrapDocument):
     pass
 
 @copy_class(djmod.ListView)
